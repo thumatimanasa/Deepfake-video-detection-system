@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Deepfake Detector</title>
+  <style>
+    * {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+font-family: 'Arial', sans-serif;
+background-color: #f9f9f9;
+color: #333;
+line-height: 1.6;
+}
+.logo {
+position: absolute;
+top: 10px;
+left: 10px;
+height: 70px;
+width: auto;
+margin: 0;
+}
+
+header{
+background-color: #333333;
+padding: 1.5rem 0;
+text-align: center;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
+}
+
+nav ul li {
+display: inline;
+margin: 0 20px;
+}
+
+nav ul li a {
+color: white;
+text-decoration: none;
+font-weight: bold;
+transition: color 0.3s;
+}
+.hero {
+width: 100%;
+min-height: 130vh;
+color: white;
+padding: 0; /* Remove padding that might be causing cropping */
+text-align: center;
+background-size: contain; /* Ensures the full image is visible */
+background-position: top center; /* Keeps the top part visible */
+background-repeat: no-repeat;
+background-color: black; /* Fills any empty space */
+background-image: url('https://theaipedia.io/wp-content/uploads/2023/06/Deepfake-Detector-2.jpg');
+}
+
+.hero h1 {
+font-size: 3rem;
+margin-bottom: 20px;
+}
+
+.hero p {
+font-size: 1.2rem;
+margin-bottom: 30px;
+}
+
+.cta {
+background-color: #fff;
+color: #007BFF;
+padding: 15px 30px;
+text-decoration: none;
+border-radius: 30px;
+font-weight: bold;
+transition: background-color 0.3s, color 0.3s;
+}
+
+.cta:hover {
+background-color: #007BFF;
+color: white;
+}
+
+.features {
+padding: 50px 0;
+text-align: center;
+background: linear-gradient(to right, #f4f4f4, #eaeaea);
+}
+
+.features h2 {
+font-size: 2.5rem;
+margin-bottom: 20px;
+color: #333;
+}
+
+.feature-item {
+display: inline-block;
+width: 30%;
+margin: 20px;
+padding: 20px;
+background-color: white;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+text-align: center;
+transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.feature-item:nth-child(1) {
+background-color: #ffefe5;
+}
+
+.feature-item:nth-child(2) {
+background-color: #e5f7ff;
+}
+
+.feature-item:nth-child(3) {
+background-color: #e5ffee;
+}
+
+.feature-item:hover {
+transform: translateY(-10px);
+box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+background-color: #fff9e5;
+}
+
+.feature-item h3 {
+font-size: 1.8rem;
+margin-bottom: 10px;
+color: #333;
+}
+
+.feature-item p {
+font-size: 1.1rem;
+color: #666;
+}
+
+.face-detection {
+padding: 60px 0;
+background-color: #f4f4f4;
+}
+
+.face-detection h1, .face-detection h2 {
+color: #007BFF;
+}
+
+.face-detection ul {
+padding: 0;
+list-style-type: none;
+}
+
+.face-detection ul li {
+margin: 10px 0;
+font-size: 1.1rem;
+color: #666;
+}
+
+.contact-form {
+padding: 60px 0;
+text-align: center;
+background-color: #f0f4f8;
+}
+
+.contact-form h1 {
+font-size: 2.5rem;
+margin-bottom: 20px;
+color: #6C63FF;
+}
+
+.contact-form p {
+font-size: 1.2rem;
+margin-bottom: 30px;
+color: #333;
+}
+
+form {
+max-width: 600px;
+margin: 0 auto;
+display: grid;
+gap: 15px;
+}
+
+input, textarea {
+padding: 15px;
+width: 100%;
+border: 1px solid #ddd;
+border-radius: 8px;
+font-size: 1.1rem;
+transition: border-color 0.3s;
+background-color: #fff;
+}
+
+input:focus, textarea:focus {
+border-color: #6C63FF;
+outline: none;
+}
+
+button {
+padding: 15px 30px;
+background-color: #6C63FF;
+color: white;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-size: 1.1rem;
+font-weight: bold;
+transition: background-color 0.3s;
+}
+
+button:hover {
+background-color: #5a54e5;
+}
+
+footer {
+background-color: #2d2d2d;
+color: white;
+padding: 2rem 0;
+text-align: center;
+}
+
+footer a {
+color: #f0f4f8;
+text-decoration: none;
+font-weight: bold;
+transition: color 0.3s;
+}
+
+footer a:hover {
+color: #6C63FF;
+}
+
+.face-detection{
+margin-left: 20px;
+margin-right: 20px;
+}
+
+@media (max-width: 768px) {
+.feature-item {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.hero {
+  padding: 50px 20px;
+}
+
+.cta {
+  padding: 10px 20px;
+}
+
+.contact-form form {
+  padding: 0 15px;
+}
+
+.dark-mode-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+}
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+header {
+  text-align: center;
+  padding: 2rem 0;
+  color: white;
+}
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+header p {
+  margin: 0.5rem 0 0;
+  font-size: 1.2rem;
+}
+main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.upload-section {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+.upload-section input[type="file"] {
+  margin-top: 1rem;
+}
+.upload-section button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+.upload-section button:hover {
+  background-color: #0056b3;
+}
+.result-section {
+  text-align: center;
+  margin-top: 2rem;
+}
+.result-section p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+.result-section a {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+.result-section a:hover {
+  background-color: #218838;
+}
+footer {
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #666;
+  background-color: #f1f1f1;
+}
+#fdet{
+background-color:#0056B3 ;
+}
+#home {
+width: 100%;
+height: 70vh;
+color: white;
+padding: 100px 0;
+text-align: center;
+background-color: black;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+}
+.upload-section input[type="submit"] {
+cursor: pointer; 
+background-color: #28a745; /* Green background */
+color: white; 
+border: none;
+padding: 12px 20px;
+font-size: 1rem;
+border-radius: 5px;
+transition: background-color 0.3s ease-in-out;
+}
+
+.upload-section input[type="submit"]:hover {
+background-color: #007bff; /* Blue on hover */
+}
+/* Logo Animation */
+.logo {
+animation: logoAnimation 2s ease-in-out;
+}
+
+@keyframes logoAnimation {
+0% { transform: scale(0); opacity: 0; }
+50% { transform: scale(1.1); opacity: 1; }
+100% { transform: scale(1); }
+}
+
+/* Header Navigation Styling */
+header {
+background-color: #333;
+padding: 1.5rem 0;
+text-align: center;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
+}
+
+nav ul li {
+display: inline;
+margin: 0 20px;
+}
+
+/* Styling Links with Animation */
+nav ul li a {
+color: white;
+text-decoration: none;
+font-weight: bold;
+transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a:hover {
+color: #007bff; /* Blue color on hover */
+transform: scale(1.1); /* Slight scale effect */
+}
+
+/* Link Animation */
+nav ul li a {
+animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+0% { opacity: 0; transform: translateY(-10px); }
+100% { opacity: 1; transform: translateY(0); }
+}
+
+nav ul li:nth-child(1) a {
+animation-delay: 0s;
+}
+
+nav ul li:nth-child(2) a {
+animation-delay: 0.2s;
+}
+
+nav ul li:nth-child(3) a {
+animation-delay: 0.4s;
+}
+/* --------------------------------------------------------------------- */
+
+    * { 
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+  
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+      }
+  
+      .logo {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        height: 70px;
+        width: auto;
+        margin: 0;
+      }
+  
+      header {
+        background-color: #333333;
+        padding: 1.5rem 0;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+  
+      nav ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+  
+      nav ul li {
+        display: inline;
+        margin: 0 20px;
+      }
+  
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+      }
+  
+      .contact-form {
+        padding: 60px 0;
+        text-align: center;
+        background-color: #f0f4f8;
+      }
+  
+      .contact-form h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #6C63FF;
+      }
+  
+      .contact-form p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: #333;
+      }
+  
+      form {
+        max-width: 600px;
+        margin: 0 auto;
+        display: grid;
+        gap: 15px;
+      }
+  
+      input, textarea {
+        padding: 15px;
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        transition: border-color 0.3s;
+        background-color: #fff;
+      }
+  
+      input:focus, textarea:focus {
+        border-color: #6C63FF;
+        outline: none;
+      }
+  
+      button {
+        padding: 15px 30px;
+        background-color: #6C63FF;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+  
+      button:hover {
+        background-color: #5a54e5;
+      }
+  
+      .success-message {
+        display: none;
+        text-align: center;
+        padding: 50px;
+        background: linear-gradient(135deg, #00aaff, #007bff);
+        color: white;
+        border-radius: 10px;
+        animation: fadeIn 1s ease-in-out;
+      }
+  
+      @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(-10px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+  
+      .success-message h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+      }
+  
+      .success-message p {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+      }
+  
+      .cta {
+        padding: 10px 30px;
+        font-size: 1.2rem;
+        background-color: #fff;
+        color: #007BFF;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s, color 0.3s;
+      }
+  
+      .cta:hover {
+        background-color: #007BFF;
+        color: white;
+      }
+  
+/* --------------------------------------------------------------------------------- */
+     
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 50px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+p {
+  color: #555;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.report-btn {
+  display: inline-block;
+  width: 100%;
+  max-width: 300px;
+  background: #d9534f;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.report-btn:hover {
+  background: #c9302c;
+  transform: scale(1.05);
+}
+
+  </style>
+</head>
+<body>
+
+  <header id="header">
+    <img class="logo" src="https://tse1.mm.bing.net/th?id=OIP.jYcQZbroi8owRzZl8FMx1gHaH5&pid=Api&P=0&h=180" alt="">
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#fd">Deepfake Detection</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+</header>
+
+
+  <!-- Home Section -->
+  <section id="home" class="hero">
+    <h1 style="color:yellow;">Welcome to AI Deepfake Detector</h1>
+    <p style="color: rgb(211, 211, 211);">Detect face-swap deepfake videos easily using our Python and Flask-based solution.</p>
+    <a href="#fd" class="cta" style="color: white; background-color: blue;">Learn More</a>
+</section>
+
+
+  <!-- Features Section -->
+  <section class="features">
+    <h2>Our Key Features</h2>
+    <div class="feature-item">
+      <h3>Simple Deepfake Detection</h3>
+      <p>Upload videos to detect face-swap manipulations using our Flask-based backend.</p>
+    </div>
+    <div class="feature-item">
+      <h3>Secure Processing</h3>
+      <p>Process videos securely on your local server.</p>
+    </div>
+    <div class="feature-item">
+      <h3>Lightweight Solution</h3>
+      <p>Built with Python and Flask, ensuring simplicity and efficiency.</p>
+    </div>
+  </section>
+
+  <!-- Deepfake Detection Section -->
+  <section id="fd" class="deepfake-section">
+    <header id="fdet">
+      <h1>Upload a Video to Check for DeepFake</h1>
+    </header>
+
+    <main>
+      <section class="upload-section">
+          <form action="/upload" method="post" enctype="multipart/form-data">
+              <input type="file" name="file" accept=".mp4" required>
+              <input type="submit" value="Upload">
+          </form>
+      </section>
+  </main>
+  
+  </section>
+  <!-- ------------------------------------------------------------------------------ -->
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepfake Awareness</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Beware of Deepfake Videos</h2>
+        <p>Deepfake videos—fake videos created using AI to manipulate real content. These can be used for scams, defamation, or spreading false information. But what can we do about it?</p>
+        <h3>What Should We Do?</h3>
+        <p>If you find a deepfake video, taking quick action is important. Our website provides an easy way to report fake videos directly to cybercrime units, law enforcement agencies, and police stations. This helps authorities respond quickly and stop the spread of false content.</p>
+        <button class="report-btn" onclick="reportDeepfake()">Report a Deepfake</button>
+    </div>
+
+    <script>
+        function reportDeepfake() {
+            alert("Redirecting to the reporting portal...");
+            window.location.href = "https://cybercrime.gov.in"; // Replace with actual reporting link
+        }
+    </script>
+</body>
+</html>
+
+
+
+  <!-- ------------------------------------------------------------------------------------- -->
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+  
+  
+    <!-- Contact Section -->
+    <section id="contact" class="contact-form">
+      <h1>Contact Us</h1>
+      <p>Have questions or need assistance? Get in touch with us. We're here to help!</p>
+  
+      <form id="contactForm" onsubmit="return showAlert()">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+  
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+  
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+  
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+  
+    <!-- Success Message Section -->
+    <section id="successMessage" class="success-message">
+      <h1>Details Submitted Successfully!</h1>
+      <p>Your details have been successfully received. Thank you for contacting us.</p>
+      <a href="/" class="cta">Back to Home</a>
+    </section>
+  
+    <script>
+      function showAlert() {
+        // Hide the contact form and show success message
+        document.querySelector('.contact-form').style.display = 'none';
+        document.querySelector('.success-message').style.display = 'block';
+  
+        // Prevent form submission
+        return false;
+      }
+    </script>
+  
+  </body>
+  </html>
+  
+
+  
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-details">
+      <p style="color: red; background-color: black; padding: 20px;">&copy; 2025 AI Deepfake Detector - All Rights Reserved</p>
+    </div>
+  </footer>
+
+</body>
+</html>
